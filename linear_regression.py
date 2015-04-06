@@ -16,12 +16,13 @@ class linreg(object):
 		self.targets = targets
 
 	def inputMatrixTransform(self):
+		print "Transforming Matrix for suitable analysis"
 		input_rows = shape(self.inputs)[0]
 		ones_vec = -ones((input_rows, 1))
 		self.X = concatenate((self.inputs, ones_vec), axis=1)
 
 	def calculateBeta(self):
-		#self.XT = transpose(self.X)
+		print "Calculating the Beta Coefficients"
 		Xtranspose_X = dot(transpose(self.X), self.X)
 		Xtranspose_X_minusONE = inv(Xtranspose_X)
 		Xtranspose_X_minusONE_Xtranspose = dot(Xtranspose_X_minusONE,
@@ -29,6 +30,7 @@ class linreg(object):
 		self.beta = dot(Xtranspose_X_minusONE_Xtranspose, self.targets)
 
 	def predictOutputs(self):
+		print "Generating Predicted Outputs"
 		self.outputs = dot(self.X, self.beta)
 
 	def run(self):
@@ -38,9 +40,8 @@ class linreg(object):
 
 
 if __name__ == '__main__':
-	#inputs = np.array([[1], [2], [1], [3]])
-	inputs = np.array([[1, 3, 2], [2, 4, 4], [1, 1, 2], [3, 3, 4]])
-	targets = np.array([[2], [3], [3], [4]])
+	inputs = np.random.rand(10e7, 5)
+	targets = np.random.rand(10e7)
 	reg = linreg(inputs, targets)
 	reg.run()
 	pdb.set_trace()
